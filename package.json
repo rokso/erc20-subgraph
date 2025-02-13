@@ -1,0 +1,26 @@
+{
+  "name": "erc20-subgraph",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "eslint": "eslint . --ext .ts --fix",
+    "build": "run-s codegen && graph build",
+    "codegen": "graph codegen",
+    "graph": "graph",
+    "deploy": "graph deploy erc20-balance-hemi --node https://api.studio.thegraph.com/deploy/",
+    "test": "graph test -d"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.95.0",
+    "@graphprotocol/graph-ts": "0.36.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@amxx/graphprotocol-utils": "^1.2.0"
+  }
+}

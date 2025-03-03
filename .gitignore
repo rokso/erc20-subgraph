@@ -13,3 +13,8 @@ node_modules
 # build
 generated
 build
+
+# matchstick aka subgraph tests
+tests/.bin/
+tests/.docker/
+tests/.latest.json

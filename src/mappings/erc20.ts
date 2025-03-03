@@ -19,10 +19,10 @@ export function fetchERC20(address: Address): ERC20Contract {
   let contract = ERC20Contract.load(address)
 
   if (!contract) {
-    let endpoint = ERC20.bind(address)
-    let name = endpoint.try_name()
-    let symbol = endpoint.try_symbol()
-    let decimals = endpoint.try_decimals()
+    const endpoint = ERC20.bind(address)
+    const name = endpoint.try_name()
+    const symbol = endpoint.try_symbol()
+    const decimals = endpoint.try_decimals()
 
     // Common
     contract = new ERC20Contract(address)
@@ -42,7 +42,7 @@ export function fetchERC20(address: Address): ERC20Contract {
 }
 
 export function fetchERC20Balance(contract: ERC20Contract, account: Account | null): ERC20Balance {
-  let id = contract.id
+  const id = contract.id
     .toHex()
     .concat('/')
     .concat(account ? account.id.toHex() : 'totalSupply')
@@ -61,8 +61,8 @@ export function fetchERC20Balance(contract: ERC20Contract, account: Account | nu
 }
 
 export function handleTransfer(event: TransferEvent): void {
-  let contract = fetchERC20(event.address)
-  let ev = new ERC20Transfer(events.id(event))
+  const contract = fetchERC20(event.address)
+  const ev = new ERC20Transfer(events.id(event))
   ev.emitter = contract.id
   ev.transaction = transactions.log(event).id
   ev.timestamp = event.block.timestamp
@@ -72,13 +72,13 @@ export function handleTransfer(event: TransferEvent): void {
 
   // if `from` is zero then it is a transfer event due to mint()
   if (event.params.from == Address.zero()) {
-    let totalSupply = fetchERC20Balance(contract, null)
+    const totalSupply = fetchERC20Balance(contract, null)
     totalSupply.valueExact = totalSupply.valueExact.plus(event.params.value)
     totalSupply.value = decimals.toDecimals(totalSupply.valueExact, contract.decimals.toI32())
     totalSupply.save()
   } else {
-    let from = fetchAccount(event.params.from)
-    let balance = fetchERC20Balance(contract, from)
+    const from = fetchAccount(event.params.from)
+    const balance = fetchERC20Balance(contract, from)
     balance.valueExact = balance.valueExact.minus(event.params.value)
     balance.value = decimals.toDecimals(balance.valueExact, contract.decimals.toI32())
     balance.save()
@@ -89,13 +89,13 @@ export function handleTransfer(event: TransferEvent): void {
 
   // if `to` is zero then it is a transfer event due to burn()
   if (event.params.to == Address.zero()) {
-    let totalSupply = fetchERC20Balance(contract, null)
+    const totalSupply = fetchERC20Balance(contract, null)
     totalSupply.valueExact = totalSupply.valueExact.minus(event.params.value)
     totalSupply.value = decimals.toDecimals(totalSupply.valueExact, contract.decimals.toI32())
     totalSupply.save()
   } else {
-    let to = fetchAccount(event.params.to)
-    let balance = fetchERC20Balance(contract, to)
+    const to = fetchAccount(event.params.to)
+    const balance = fetchERC20Balance(contract, to)
     balance.valueExact = balance.valueExact.plus(event.params.value)
     balance.value = decimals.toDecimals(balance.valueExact, contract.decimals.toI32())
     balance.save()

@@ -18,3 +18,4 @@ Follow deployment guide [here](https://thegraph.com/docs/en/subgraphs/developing
   
 **Deploy Subgraph**
 - Run `yarn deploy`
+> This command is going to ask subgraph name. As a rule of thumb you should follow "erc20-subgraph-${chainName}" pattern for subgraph name.
